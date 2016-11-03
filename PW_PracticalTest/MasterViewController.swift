@@ -7,24 +7,26 @@
 //
 
 import UIKit
+import AlamofireImage
 
-class MasterViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class MasterViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var CUSTOM_CollectionView: UICollectionView!
     
     var responseJSON: NSMutableArray = []
     var images_cache: NSMutableArray = []
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
+
         fetchJSONContent()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
-        
+        self.automaticallyAdjustsScrollViewInsets = false
+        self.navigationController?.navigationItem.title = "PHUN APP"
     }
     
     override func didReceiveMemoryWarning() {
@@ -63,77 +65,6 @@ class MasterViewController: UIViewController, UICollectionViewDataSource, UIColl
             }
         }
     }
-
-    func loadingImage(link:String, imageview:UIImageView)
-    {
-
-        let url:NSURL = NSURL(string: link)!
-        let session = URLSession.shared
-        
-        let request = NSMutableURLRequest(url: url as URL)
-        request.timeoutInterval = 200
-        
-        
-        let task = session.dataTask(with: request as URLRequest) {
-            
-            ( data, response, error) in
-
-            guard let _:NSData = data as NSData?, let _:URLResponse = response  , error == nil else {
-                
-                return
-            }
-            
-            
-            var image = UIImage(data: data!)
-            
-            if (image != nil)
-            {
-                DispatchQueue.main.async {
-                    self.writeFile(imageName: link, writeImage: image!)
-                }
-                
-                
-                func set_image()
-                {
-                    imageview.image = image
-                }
-
-                DispatchQueue.main.async(execute: set_image)
-            }
-            
-        }
-        
-        task.resume()
-        
-    }
-    
-    // Read Write images into File
-    
-    func removeSpecialCharsFromString(str: String) -> String {
-        let chars = Set("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890".characters)
-        return String(str.characters.filter { chars.contains($0) })
-    }
-
-    func writeFile(imageName:String, writeImage:UIImage) {
-        
-        do {
-            
-            let fileManager = FileManager.default
-            let paths = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent("\(removeSpecialCharsFromString(str: imageName)).jpg")
-            let imageData = UIImageJPEGRepresentation(writeImage, 0.7)
-            fileManager.createFile(atPath: paths as String, contents: imageData, attributes: nil)
-        }
-    }
-    
-    func readFile(imageName:String) -> UIImage {
-        
-        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let filePath = documentsURL.appendingPathComponent("\(removeSpecialCharsFromString(str: imageName)).jpg").path
-        if FileManager.default.fileExists(atPath: filePath) {
-            return UIImage(contentsOfFile: filePath)!
-        }
-        return UIImage()
-    }
     
     // CollectionView delegate methods
     
@@ -153,45 +84,15 @@ class MasterViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         let objModelCollection:ModelCollection = responseJSON.object(at : (indexPath as NSIndexPath).row) as! ModelCollection
 
-        let namePredicate = NSPredicate(format: "self = %@",objModelCollection.imageURL)
-        let imageLinkArray = images_cache as NSArray
-        
-        let filteredArray: NSArray = imageLinkArray.filter { namePredicate.evaluate(with: $0) } as NSArray
-        
-        if (filteredArray.count > 0) {
-            
-            print("from caching \(indexPath.row) \(images_cache.object(at: indexPath.row))")
+        if objModelCollection.imageURL.contains("NoValue") {
 
-            DispatchQueue.main.async(execute: {
-                
-                if objModelCollection.imageURL.contains("NoValue") {
-                    
-                    cell.gridImageView.image = UIImage(named: "placeholder_nomoon")
-                }
-                else {
-                    cell.gridImageView?.image = self.readFile(imageName: objModelCollection.imageURL)
-                }
-            })
+            cell.gridImageView.image = UIImage(named: "placeholder_nomoon")
         }
         else {
-            
-            images_cache.add(objModelCollection.imageURL)
-            
-            if objModelCollection.imageURL.contains("NoValue") {
-    
-                cell.gridImageView.image = UIImage(named: "placeholder_nomoon")
-            }
-            else {
-                loadingImage(link: objModelCollection.imageURL, imageview: cell.gridImageView)
-            }
+            cell.gridImageView.af_setImage(withURL: URL(string: objModelCollection.imageURL)!)
         }
 
         return cell
-    }
-    
-    private func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
-    {
-        return CGSize(width:UIScreen.main.bounds.width,height:220)
     }
     
     // MARK: - UICollectionViewDelegate protocol
@@ -201,6 +102,30 @@ class MasterViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.objModelCollection = responseJSON.object(at : (indexPath as NSIndexPath).row) as! ModelCollection
+        
+        let transition: CATransition = CATransition()
+        transition.duration = 0.4
+        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        transition.type = kCATransitionFade
+        self.navigationController!.view.layer.add(transition, forKey: nil)
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "DetailView") as! DetailViewController
+        self.navigationController?.pushViewController(vc, animated: false)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        var sizeOfCell: CGSize = CGSize(width:0, height:0)
+        
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad) {
+            
+            sizeOfCell = CGSize(width:UIScreen.main.bounds.width/2, height:220)
+        } else {
+            
+            sizeOfCell = CGSize(width:UIScreen.main.bounds.width, height:220)
+        }
+
+        return sizeOfCell
     }
 }
 

@@ -9,11 +9,10 @@
 import UIKit
 
 class CUSTOM_TableViewCell: UITableViewCell {
-    
-    @IBOutlet weak var textView: UITextView!
-    
+        
     @IBOutlet weak var lblLocation_2: UILabel!
     @IBOutlet weak var lblLocation_1: UILabel!
+    @IBOutlet weak var lblDescription: UILabel!
     
     override func awakeFromNib() {
         

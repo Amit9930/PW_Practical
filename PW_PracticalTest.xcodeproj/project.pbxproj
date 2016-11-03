@@ -21,6 +21,7 @@
 		379E7D471DC10BAF00C3608D /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379E7D461DC10BAF00C3608D /* HeaderView.swift */; };
 		379E7D4B1DC1567700C3608D /* DataFile.json in Resources */ = {isa = PBXBuildFile; fileRef = 379E7D4A1DC1567700C3608D /* DataFile.json */; };
 		379E7D4D1DC156DB00C3608D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 379E7D4C1DC156DB00C3608D /* Assets.xcassets */; };
+		8660403C44C9BBF2D667FE1A /* Pods_PW_PracticalTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CACB46E03AA5456634371900 /* Pods_PW_PracticalTest.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A88AA7A2B137D409996A5CD /* Pods-PW_PracticalTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PW_PracticalTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PW_PracticalTest/Pods-PW_PracticalTest.debug.xcconfig"; sourceTree = "<group>"; };
+		1DDEADC1C3FDC218106FF732 /* Pods-PW_PracticalTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PW_PracticalTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-PW_PracticalTest/Pods-PW_PracticalTest.release.xcconfig"; sourceTree = "<group>"; };
 		3710D94E1DC03E670055BAD0 /* PW_PracticalTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PW_PracticalTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3710D9511DC03E670055BAD0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3710D9531DC03E670055BAD0 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -61,6 +64,7 @@
 		379E7D461DC10BAF00C3608D /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		379E7D4A1DC1567700C3608D /* DataFile.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = DataFile.json; sourceTree = "<group>"; };
 		379E7D4C1DC156DB00C3608D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CACB46E03AA5456634371900 /* Pods_PW_PracticalTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PW_PracticalTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8660403C44C9BBF2D667FE1A /* Pods_PW_PracticalTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +100,8 @@
 				3710D9681DC03E670055BAD0 /* PW_PracticalTestTests */,
 				3710D9731DC03E670055BAD0 /* PW_PracticalTestUITests */,
 				3710D94F1DC03E670055BAD0 /* Products */,
+				BA01AC60564306389A61ABAD /* Pods */,
+				72D269DBB105C98E460319EB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -146,6 +153,23 @@
 			path = PW_PracticalTestUITests;
 			sourceTree = "<group>";
 		};
+		72D269DBB105C98E460319EB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CACB46E03AA5456634371900 /* Pods_PW_PracticalTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BA01AC60564306389A61ABAD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0A88AA7A2B137D409996A5CD /* Pods-PW_PracticalTest.debug.xcconfig */,
+				1DDEADC1C3FDC218106FF732 /* Pods-PW_PracticalTest.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -153,9 +177,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3710D9791DC03E670055BAD0 /* Build configuration list for PBXNativeTarget "PW_PracticalTest" */;
 			buildPhases = (
+				ADDD60F02CC766884BD4051F /* Check Pods Manifest.lock */,
 				3710D94A1DC03E670055BAD0 /* Sources */,
 				3710D94B1DC03E670055BAD0 /* Frameworks */,
 				3710D94C1DC03E670055BAD0 /* Resources */,
+				F0FBFE661D5C8FA9AF0D4013 /* Embed Pods Frameworks */,
+				3E38D41A6C3B205DC9CED4AA /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -209,7 +236,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Amit Patel";
 				TargetAttributes = {
 					3710D94D1DC03E670055BAD0 = {
@@ -279,6 +306,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3E38D41A6C3B205DC9CED4AA /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PW_PracticalTest/Pods-PW_PracticalTest-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ADDD60F02CC766884BD4051F /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F0FBFE661D5C8FA9AF0D4013 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PW_PracticalTest/Pods-PW_PracticalTest-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3710D94A1DC03E670055BAD0 /* Sources */ = {
@@ -365,6 +440,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -416,6 +492,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -444,7 +521,9 @@
 		};
 		3710D97A1DC03E670055BAD0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0A88AA7A2B137D409996A5CD /* Pods-PW_PracticalTest.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = XY22ENZGF7;
 				INFOPLIST_FILE = PW_PracticalTest/Info.plist;
@@ -457,7 +536,9 @@
 		};
 		3710D97B1DC03E670055BAD0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1DDEADC1C3FDC218106FF732 /* Pods-PW_PracticalTest.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = XY22ENZGF7;
 				INFOPLIST_FILE = PW_PracticalTest/Info.plist;

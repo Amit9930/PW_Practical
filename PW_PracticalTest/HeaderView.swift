@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AlamofireImage
 
 class HeaderView: UIView {
     
@@ -31,6 +32,7 @@ class HeaderView: UIView {
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.backgroundColor = UIColor.white
         self.addSubview(containerView)
+        
         self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[containerView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["containerView" : containerView]))
         self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[containerView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["containerView" : containerView]))
         containerLayoutConstraint = NSLayoutConstraint(item: containerView, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 1.0, constant: 0.0)
@@ -39,8 +41,8 @@ class HeaderView: UIView {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
         let imageView: UIImageView = UIImageView.init()
-        imageView.tag = 123
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.tag = 123
         imageView.backgroundColor = UIColor.white
         imageView.clipsToBounds = true
         
@@ -49,7 +51,8 @@ class HeaderView: UIView {
             imageView.image = UIImage(named: "placeholder_nomoon")
         }
         else {
-            imageView.image = readFile(imageName: appDelegate.objModelCollection.imageURL)
+            
+            imageView.af_setImage(withURL: URL(string: appDelegate.objModelCollection.imageURL)!)
         }
         
         imageView.contentMode = .scaleAspectFill
@@ -62,59 +65,36 @@ class HeaderView: UIView {
         heightLayoutConstraint = NSLayoutConstraint(item: imageView, attribute: .height, relatedBy: .equal, toItem: containerView, attribute: .height, multiplier: 1.0, constant: 0.0)
         containerView.addConstraint(heightLayoutConstraint)
         
+        let frame = CGRect(x: 0, y: 110, width: self.bounds.width, height: 140)
+        let gradientView = UIView(frame: frame)
+        gradientView.backgroundColor = UIColor.clear
+        containerView.addSubview(gradientView)
+        
+        let gradientLayer: CAGradientLayer = CAGradientLayer()
+        gradientLayer.frame = gradientView.bounds
+        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.white.cgColor]
+//        gradientLayer.locations = [0.0,1.5]
+        gradientView.layer.insertSublayer(gradientLayer, at: 0)
+        
         // ADD DATE & HEADER LABLE (animated)
         
-        DateLabel = UILabel(frame: CGRect(x: 0, y: 140, width: 320, height: 22))
-        DateLabel.center = CGPoint(x: 164, y: 151)
+        DateLabel = UILabel(frame: CGRect(x: 0, y: 185, width: 320, height: 22))
+        DateLabel.center = CGPoint(x: 164, y: 196)
         DateLabel.textAlignment = .left
         DateLabel.text = appDelegate.objModelCollection.date
         DateLabel.font = UIFont.systemFont(ofSize: 10)
         containerView.addSubview(DateLabel)
-
-        HeaderLabel = UILabel(frame: CGRect(x: 0, y: 160, width: 320, height: 30))
-        HeaderLabel.center = CGPoint(x: 164, y: 175)
+    
+        HeaderLabel = UILabel(frame: CGRect(x: 0, y: 215, width: 320, height: 30))
+        HeaderLabel.tag = 124
+        HeaderLabel.center = CGPoint(x: 164, y: 225)
         HeaderLabel.textAlignment = .left
         HeaderLabel.text = appDelegate.objModelCollection.title
         HeaderLabel.font = UIFont.boldSystemFont(ofSize: 22)
+        HeaderLabel.isHidden = true
         containerView.addSubview(HeaderLabel)
+    }
 
-    }
-    
-    func convertGradientToImage(frame: CGRect) -> UIImage {
-        
-        // start with a CAGradientLayer
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = frame
-        
-        gradientLayer.colors = [ UIColor.white.cgColor, UIColor.clear.cgColor]
-        gradientLayer.locations = [ 0.0, 1.0 ]
-        gradientLayer.isOpaque = false
-        gradientLayer.locations = [0.0,  0.3, 0.5, 0.7, 1.0]
-        
-        // now build a UIImage from the gradient
-        UIGraphicsBeginImageContext(gradientLayer.bounds.size)
-        gradientLayer.render(in: UIGraphicsGetCurrentContext()!)
-        let gradientImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        // return the gradient image
-        return gradientImage!
-    }
-    
-    func removeSpecialCharsFromString(str: String) -> String {
-        let chars = Set("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890".characters)
-        return String(str.characters.filter { chars.contains($0) })
-    }
-    
-    func readFile(imageName:String) -> UIImage {
-        
-        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let filePath = documentsURL.appendingPathComponent("\(removeSpecialCharsFromString(str: imageName)).jpg").path
-        if FileManager.default.fileExists(atPath: filePath) {
-            return UIImage(contentsOfFile: filePath)!
-        }
-        return UIImage()
-    }
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }

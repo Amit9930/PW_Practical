@@ -1,0 +1,6 @@
+framework module Pods_PW_PracticalTest {
+  umbrella header "Pods-PW_PracticalTest-umbrella.h"
+
+  export *
+  module * { export * }
+}
